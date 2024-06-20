@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام التصويت بالأرقام</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>نظام التصويت بالأرقام</h1>
+        <form id="addNumberForm">
+            <input type="number" id="numberInput" placeholder="أدخل رقماً" required>
+            <button type="submit">إضافة</button>
+        </form>
+        <ul id="numberList"></ul>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+input[type="number"] {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f9f9f9;
+    margin-bottom: 5px;
+}
+
+.vote-count {
+    margin-left: 10px;
+}
+
+button.vote-button {
+    margin-left: 10px;
+    cursor: pointer;
+}
+document.addEventListener('DOMContentLoaded', () => {
+    const numberList = document.getElementById('numberList');
+    const addNumberForm = document.getElementById('addNumberForm');
+    const numberInput = document.getElementById('numberInput');
+
+    addNumberForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        addNumber(numberInput.value);
+        numberInput.value = '';
+    });
+
+    function addNumber(number) {
+        const li = document.createElement('li');
+        const voteCount = document.createElement('span');
+        const voteButton = document.createElement('button');
+
+        voteCount.textContent = 0;
+        voteCount.classList.add('vote-count');
+
+        voteButton.textContent = 'تصويت';
+        voteButton.classList.add('vote-button');
+        voteButton.addEventListener('click', () => {
+            voteCount.textContent = parseInt(voteCount.textContent) + 1;
+        });
+
+        li.textContent = number;
+        li.appendChild(voteCount);
+        li.appendChild(voteButton);
+        numberList.appendChild(li);
+    }
+});
